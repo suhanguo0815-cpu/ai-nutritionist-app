@@ -1,0 +1,96 @@
+/* 通用导航栏样式 - 确保在所有页面都能正确固定显示 */
+
+.tab-bar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 83px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid #e5e5e7;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    z-index: 10000;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+.tab-item:hover:not(.active) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.tab-item:active {
+    transform: scale(0.95);
+}
+
+.tab-item.active {
+    color: #181818;
+    font-weight: 600;
+    text-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.1);
+}
+
+.tab-item:not(.active) {
+    color: #666666;
+    font-weight: 500;
+}
+
+/* 确保导航栏在所有情况下都显示在最上层 */
+.tab-bar * {
+    position: relative;
+    z-index: 10001;
+}
+
+/* 为有导航栏的页面添加底部内边距，避免内容被导航栏遮挡 */
+body.has-tab-bar {
+    padding-bottom: 100px;
+}
+
+/* 响应式设计 - 确保在不同屏幕尺寸下都能正确显示 */
+@media (max-width: 480px) {
+    .tab-bar {
+        height: 75px;
+        padding-bottom: calc(15px + env(safe-area-inset-bottom));
+    }
+    
+    .tab-item {
+        font-size: 11px;
+        padding: 6px;
+    }
+    
+    body.has-tab-bar {
+        padding-bottom: 90px;
+    }
+}
+
+/* 确保导航栏在iOS Safari中正确显示 */
+@supports (-webkit-touch-callout: none) {
+    .tab-bar {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+/* 防止导航栏在某些情况下被隐藏 */
+.tab-bar {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: flex !important;
+}

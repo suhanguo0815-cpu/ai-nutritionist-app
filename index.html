@@ -346,16 +346,6 @@
                     </div>
                 </div>
 
-                <!-- 体检报告 -->
-                <div class="prototype-item">
-                    <div class="page-level secondary">二级</div>
-                    <h3 class="prototype-title">体检报告</h3>
-                    <div class="phone-frame">
-                        <div class="screen">
-                            <iframe src="medical-reports.html" width="100%" height="100%" frameborder="0"></iframe>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- 健康档案 -->
                 <div class="prototype-item">
@@ -410,7 +400,7 @@
     <div class="text-center py-8 bg-white mt-12">
         <div class="grid grid-cols-4 gap-8 max-w-4xl mx-auto">
             <div>
-                <div class="text-3xl font-bold" style="color: #181818;">9</div>
+                <div class="text-3xl font-bold" style="color: #181818;">8</div>
                 <div style="color: #181818;">总页面数</div>
             </div>
             <div>
@@ -578,7 +568,7 @@
                 const map = {
                     'home': '首页', 'profile': '个人档案', 'progress': '目标管理', 'records': '健康记录',
                     'goal-setting': '目标设置', 'nutritionist': '我的AI营养师',
-                    'weight-loss-plan': '我的健康方案', 'medical-reports': '体检报告', 'health-profile': '健康档案',
+                    'weight-loss-plan': '我的健康方案', 'health-profile': '健康档案',
                     'account': '个人账号信息', 'auth': '认证'
                 };
                 return map[base] || base;
@@ -589,7 +579,7 @@
                 if (/home\.html/.test(all)) return '主要流程';
                 if (/records\.html/.test(all)) return '记录管理';
                 if (/progress\.html|goal-setting\.html/.test(all)) return '目标管理';
-                if (/profile\.html|nutritionist\.html|weight-loss-plan\.html|medical-reports\.html|health-profile\.html|account\.html|auth\.html/.test(all)) return '个人中心';
+                if (/profile\.html|nutritionist\.html|weight-loss-plan\.html|health-profile\.html|account\.html|auth\.html/.test(all)) return '个人中心';
                 return '其它';
             }
         }

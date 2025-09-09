@@ -4,7 +4,7 @@
 
 ## 🚀 在线预览
 
-访问地址：[https://suhanguo0815-cpu.github.io/ai-nutritionist-app](https://suhanguo0815-cpu.github.io/ai-nutritionist-app)
+访问地址：[https://suhanguo0815-cpu.github.io/ai-nutritionist-app](https://suhanguo0815-cpu.github.io/ai-nutritionist-app)i'you
 
 ## 📱 功能特点
 
@@ -18,7 +18,6 @@
 - **目标设置 (goal-setting.html)** - 体重目标设置和调整
 - **我的AI营养师 (nutritionist.html)** - AI营养师咨询功能
 - **我的健康方案 (weight-loss-plan.html)** - 个性化减重方案
-- **体检报告 (medical-reports.html)** - 体检报告上传和管理
 - **健康档案 (health-profile.html)** - 完整健康信息记录
 - **个人账号信息 (account.html)** - 账号信息管理
 - **认证页面 (auth.html)** - 登录/注册功能
@@ -50,7 +49,6 @@
 ├── goal-setting.html       # 目标设置
 ├── nutritionist.html       # AI营养师
 ├── weight-loss-plan.html   # 健康方案
-├── medical-reports.html    # 体检报告
 ├── health-profile.html     # 健康档案
 ├── account.html            # 账号信息
 ├── auth.html               # 认证页面
