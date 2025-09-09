@@ -4,7 +4,7 @@
 
 ## 🚀 在线预览
 
-访问地址：[https://your-username.github.io/ai-nutritionist-app](https://your-username.github.io/ai-nutritionist-app)
+访问地址：[https://suhanguo0815-cpu.github.io/ai-nutritionist-app](https://suhanguo0815-cpu.github.io/ai-nutritionist-app)
 
 ## 📱 功能特点
 
