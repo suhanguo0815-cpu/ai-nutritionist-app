@@ -3,8 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -27,6 +26,21 @@ jobs:
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        
+      - name: Clean and prepare files
+        run: |
+          # 清理不必要的文件
+          rm -f *.zip
+          rm -f *.pdf
+          rm -f *.png
+          rm -f *.csv
+          rm -f *.xlsx
+          rm -f *.excalidraw
+          rm -f .DS_Store
+          rm -f common-animations-simple.js
+          
+          # 确保所有HTML文件存在
+          ls -la *.html
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
