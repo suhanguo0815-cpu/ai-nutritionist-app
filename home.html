@@ -608,7 +608,7 @@
     const savedPro = getNumber(localStorage.getItem('plateProtein'));
     const savedCarb = getNumber(localStorage.getItem('plateCarb'));
 
-    // 默认 50/25/25（符合 2/1/1）
+    // 默认 50/25/25（符合 2/1/1），但会根据实际摄入数据动态调整
     let veg = clamp01to100(savedVeg ?? 50);
     let pro = clamp01to100(savedPro ?? 25);
     let carb = clamp01to100(savedCarb ?? 25);

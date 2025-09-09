@@ -113,14 +113,6 @@
             border-radius: 9999px;
         }
 
-        .goal-card {
-            transition: all 0.3s ease;
-        }
-
-        .goal-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
 
         @keyframes pulse {
             0%, 100% {
@@ -155,84 +147,100 @@
         </div>
     </div>
 
-    <!-- 主内容（紧凑一屏） -->
+    <!-- 主内容（优化排版） -->
     <div class="px-4 pt-3 pb-24">
-        <div class="card p-3 mb-3">
-            <h2 class="text-base font-bold text-gray-800 mb-2">当前体重</h2>
-            <div class="flex items-center justify-center gap-2 mb-4">
+        <!-- 当前体重卡片 -->
+        <div class="card p-4 mb-4">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-bold text-gray-800">当前体重</h2>
+                <div class="text-sm text-gray-500">实时更新</div>
+            </div>
+            <div class="flex items-center justify-center gap-3 mb-4">
                 <input id="currentWeightInput" type="number" value="73.2" step="0.1" min="0" max="500" class="weight-input text-center">
                 <span class="weight-unit">kg</span>
             </div>
-            <div class="grid grid-cols-2 gap-6 text-sm">
-                <div class="flex flex-col pr-3">
-                    <span class="text-gray-500">身高</span>
-                    <span class="text-base font-semibold text-gray-800 leading-tight">166 cm</span>
+            <div class="grid grid-cols-3 gap-4 text-sm">
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-500 mb-1">身高</span>
+                    <span class="text-base font-semibold text-gray-800" id="heightDisplay">166 cm</span>
                 </div>
-                <div class="flex flex-col items-end pl-4">
-                    <span class="text-gray-500">BMI</span>
-                    <span class="text-base font-semibold text-gray-800 leading-tight">26.5</span>
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-500 mb-1">当前BMI</span>
+                    <span class="text-base font-semibold text-gray-800" id="currentBmiDisplay">26.5</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-500 mb-1">BMI状态</span>
+                    <span class="text-sm font-medium px-2 py-1 rounded-full" id="bmiStatusDisplay" style="background-color: #FFF7E6; color: #D97706;">超重</span>
                 </div>
             </div>
         </div>
 
-        <div class="card p-3 mb-3">
-            <h2 class="text-base font-bold text-gray-800 mb-2">目标体重</h2>
-            <div class="flex items-center justify-center gap-2 mb-4">
+        <!-- 目标体重卡片 -->
+        <div class="card p-4 mb-4">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-bold text-gray-800">目标体重</h2>
+                <div class="text-sm text-gray-500">理想范围</div>
+            </div>
+            <div class="flex items-center justify-center gap-3 mb-4">
                 <input id="targetWeightInput" type="number" value="66.9" step="0.1" min="0" max="500" class="weight-input text-center">
                 <span class="weight-unit">kg</span>
             </div>
-            <div class="grid grid-cols-2 gap-6 text-sm">
-                <div class="flex flex-col pr-3">
-                    <span class="text-gray-500">目标BMI</span>
-                    <span class="text-base font-semibold text-gray-800 leading-tight">24.3</span>
+            <div class="grid grid-cols-3 gap-4 text-sm">
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-500 mb-1">目标BMI</span>
+                    <span class="text-base font-semibold text-gray-800" id="targetBmiDisplay">24.3</span>
                 </div>
-                <div class="flex flex-col items-end pl-4">
-                    <span class="text-gray-500">需减重</span>
-                    <span class="text-base font-semibold text-green-600 leading-tight">-6.3 kg</span>
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-500 mb-1">需减重</span>
+                    <span class="text-base font-semibold text-green-600" id="weightLossDisplay">-6.3 kg</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-500 mb-1">减重进度</span>
+                    <span class="text-sm font-medium px-2 py-1 rounded-full" style="background-color: rgba(195, 235, 46, 0.1); color: #C3EB2E;">8.6%</span>
                 </div>
             </div>
         </div>
 
-        <div class="card p-3 mb-3">
-            <h2 class="text-base font-bold text-gray-800 mb-2">BMI范围</h2>
-            <div class="bmi-scale mb-2">
-                <div class="bmi-marker" style="left: 65%;">
-                    <div class="bmi-label">当前: 26.5</div>
+        <!-- BMI范围卡片 -->
+        <div class="card p-4 mb-4">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-bold text-gray-800">BMI健康范围</h2>
+                <div class="text-sm text-gray-500">动态显示</div>
+            </div>
+            <div class="bmi-scale mb-4">
+                <div class="bmi-marker" id="bmiMarker" style="left: 65%;">
+                    <div class="bmi-label" id="bmiLabel">当前: 26.5</div>
                 </div>
             </div>
-            <div class="grid grid-cols-3 gap-2 text-center">
-                <div class="p-2 rounded-md" style="background-color: #F5FAE8; border: 1px solid #EEF2E6;">
-                    <div class="text-xs font-medium text-gray-800">正常</div>
+            <div class="grid grid-cols-3 gap-3 text-center">
+                <div class="p-3 rounded-lg" style="background-color: #F5FAE8; border: 1px solid #EEF2E6;">
+                    <div class="text-sm font-medium text-gray-800 mb-1">正常</div>
                     <div class="text-xs text-gray-500">18.5-25</div>
                 </div>
-                <div class="p-2 rounded-md" style="background-color: #FFF7E6; border: 1px solid #F2EADA;">
-                    <div class="text-xs font-medium text-gray-800">超重</div>
+                <div class="p-3 rounded-lg" style="background-color: #FFF7E6; border: 1px solid #F2EADA;">
+                    <div class="text-sm font-medium text-gray-800 mb-1">超重</div>
                     <div class="text-xs text-gray-500">25-30</div>
                 </div>
-                <div class="p-2 rounded-md" style="background-color: #FFEDEE; border: 1px solid #F6E4E5;">
-                    <div class="text-xs font-medium text-gray-800">肥胖</div>
+                <div class="p-3 rounded-lg" style="background-color: #FFEDEE; border: 1px solid #F6E4E5;">
+                    <div class="text-sm font-medium text-gray-800 mb-1">肥胖</div>
                     <div class="text-xs text-gray-500">>30</div>
                 </div>
             </div>
         </div>
 
-        <div class="card p-3 mb-20">
-            <h2 class="text-base font-bold text-gray-800 mb-2">目标周期</h2>
-            <div class="grid grid-cols-3 gap-2">
-                <div class="goal-card p-2 rounded-xl text-center border-2" style="border-color: #C3EB2E;">
-                    <div class="text-sm font-bold text-gray-800">90天</div>
-                    <div class="text-xs text-gray-600">推荐</div>
+        <!-- 健康建议卡片 -->
+        <div class="card p-4 mb-4">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background-color: rgba(195, 235, 46, 0.1);">
+                    <i class="fas fa-lightbulb text-sm" style="color: #C3EB2E;"></i>
                 </div>
-                <div class="goal-card p-2 rounded-xl text-center border border-gray-200">
-                    <div class="text-sm font-bold text-gray-800">180天</div>
-                    <div class="text-xs text-gray-600">稳健</div>
-                </div>
-                <div class="goal-card p-2 rounded-xl text-center border border-gray-200">
-                    <div class="text-sm font-bold text-gray-800">360天</div>
-                    <div class="text-xs text-gray-600">长期</div>
-                </div>
+                <h2 class="text-lg font-bold text-gray-800">健康建议</h2>
+            </div>
+            <div class="text-sm text-gray-600 leading-relaxed" id="healthAdvice">
+                根据您的BMI值，建议采用科学的减重方法：控制饮食热量，增加有氧运动，保持规律作息。目标BMI 24.3 属于正常范围，有助于降低慢性疾病风险。
             </div>
         </div>
+
     </div>
 
     <!-- 固定底部保存按钮（更薄更稳） -->
@@ -241,6 +249,9 @@
     </div>
 
     <script>
+        // 全局变量
+        let height = 166; // 默认身高，可以从localStorage获取
+        
         // 格式化体重输入为一位小数
         function formatWeightInput() {
             const weightInputs = document.querySelectorAll('.weight-input');
@@ -249,6 +260,7 @@
                     let value = parseFloat(this.value);
                     if (!isNaN(value)) {
                         this.value = value.toFixed(1);
+                        updateCalculations(); // 实时更新计算
                     }
                 });
                 
@@ -259,52 +271,230 @@
                     } else {
                         this.value = '0.0';
                     }
+                    updateCalculations();
                 });
             });
         }
 
+        // 计算BMI
+        function calculateBMI(weight, height) {
+            const heightInMeters = height / 100;
+            return weight / (heightInMeters * heightInMeters);
+        }
+
+        // 获取BMI状态
+        function getBMIStatus(bmi) {
+            if (bmi < 18.5) return { status: '偏瘦', color: '#F3F4F6', textColor: '#6B7280' };
+            if (bmi < 25) return { status: '正常', color: '#F5FAE8', textColor: '#059669' };
+            if (bmi < 30) return { status: '超重', color: '#FFF7E6', textColor: '#D97706' };
+            return { status: '肥胖', color: '#FFEDEE', textColor: '#DC2626' };
+        }
+
+        // 更新所有计算和显示
+        function updateCalculations() {
+            const currentWeight = parseFloat(document.getElementById('currentWeightInput').value) || 0;
+            const targetWeight = parseFloat(document.getElementById('targetWeightInput').value) || 0;
+            
+            // 计算BMI
+            const currentBMI = calculateBMI(currentWeight, height);
+            const targetBMI = calculateBMI(targetWeight, height);
+            const weightLoss = currentWeight - targetWeight;
+            const progressPercent = currentWeight > 0 ? ((currentWeight - targetWeight) / currentWeight * 100).toFixed(1) : 0;
+            
+            // 更新显示
+            document.getElementById('currentBmiDisplay').textContent = currentBMI.toFixed(1);
+            document.getElementById('targetBmiDisplay').textContent = targetBMI.toFixed(1);
+            document.getElementById('weightLossDisplay').textContent = weightLoss > 0 ? `-${weightLoss.toFixed(1)} kg` : `${Math.abs(weightLoss).toFixed(1)} kg`;
+            
+            // 更新BMI状态
+            const bmiStatus = getBMIStatus(currentBMI);
+            const bmiStatusElement = document.getElementById('bmiStatusDisplay');
+            bmiStatusElement.textContent = bmiStatus.status;
+            bmiStatusElement.style.backgroundColor = bmiStatus.color;
+            bmiStatusElement.style.color = bmiStatus.textColor;
+            
+            // 更新BMI标记位置
+            const bmiMarker = document.getElementById('bmiMarker');
+            const bmiLabel = document.getElementById('bmiLabel');
+            const markerPosition = Math.min(Math.max((currentBMI - 15) / 25 * 100, 0), 100);
+            bmiMarker.style.left = markerPosition + '%';
+            bmiLabel.textContent = `当前: ${currentBMI.toFixed(1)}`;
+            
+            // 更新健康建议
+            updateHealthAdvice(currentBMI, targetBMI, weightLoss);
+        }
+
+        // 更新健康建议
+        function updateHealthAdvice(currentBMI, targetBMI, weightLoss) {
+            const adviceElement = document.getElementById('healthAdvice');
+            let advice = '';
+            
+            if (currentBMI < 18.5) {
+                advice = '您的BMI偏低，建议适当增加营养摄入，进行力量训练增肌。';
+            } else if (currentBMI < 25) {
+                advice = '您的BMI在正常范围内，建议保持当前的健康生活方式，适当运动维持体重。';
+            } else if (currentBMI < 30) {
+                advice = `您当前BMI为${currentBMI.toFixed(1)}，属于超重范围。建议采用科学的减重方法：控制饮食热量，增加有氧运动，目标BMI ${targetBMI.toFixed(1)} 属于正常范围。`;
+            } else {
+                advice = `您当前BMI为${currentBMI.toFixed(1)}，属于肥胖范围。建议咨询专业医生制定减重计划，目标BMI ${targetBMI.toFixed(1)} 有助于降低慢性疾病风险。`;
+            }
+            
+            if (weightLoss > 0) {
+                advice += ` 需要减重${weightLoss.toFixed(1)}kg，建议每周减重0.5-1kg为宜。`;
+            }
+            
+            adviceElement.textContent = advice;
+        }
+
         // 页面加载完成后初始化
-        document.addEventListener('DOMContentLoaded', formatWeightInput);
+        document.addEventListener('DOMContentLoaded', function() {
+            formatWeightInput();
+            updateCalculations();
+        });
     </script>
     <script>
-      // 预填充
-      (function(){
-        const cw = localStorage.getItem('currentWeight');
-        const tw = localStorage.getItem('targetWeight');
-        if (cw) document.getElementById('currentWeightInput').value = parseFloat(cw).toFixed(1);
-        if (tw) document.getElementById('targetWeightInput').value = parseFloat(tw).toFixed(1);
-      })();
-
-      // 保存输入（失焦即保存）
-      document.getElementById('currentWeightInput').addEventListener('blur', function(){
-        const v = parseFloat(this.value);
-        if (!isNaN(v)) localStorage.setItem('currentWeight', v.toFixed(1));
-      });
-      document.getElementById('targetWeightInput').addEventListener('blur', function(){
-        const v = parseFloat(this.value);
-        if (!isNaN(v)) localStorage.setItem('targetWeight', v.toFixed(1));
-      });
-
-      // 显式保存按钮：统一保存当前输入并给出轻提示
-      (function(){
-        const btn = document.getElementById('save-goal');
-        if (!btn) return;
-        function toast(msg){
-          const t = document.createElement('div');
-          t.textContent = msg || '已保存';
-          t.style.position = 'fixed'; t.style.left = '50%'; t.style.bottom = '100px';
-          t.style.transform = 'translateX(-50%)'; t.style.background = 'rgba(17,17,17,0.9)'; t.style.color = '#fff';
-          t.style.padding = '10px 14px'; t.style.borderRadius = '10px'; t.style.fontSize = '12px'; t.style.zIndex = '1000';
-          document.body.appendChild(t); setTimeout(()=> t.remove(), 1200);
+        // 数据验证函数
+        function validateWeight(weight) {
+            if (isNaN(weight) || weight <= 0) return false;
+            if (weight < 20 || weight > 300) return false; // 合理的体重范围
+            return true;
         }
-        btn.addEventListener('click', function(){
-          const cw = parseFloat(document.getElementById('currentWeightInput').value);
-          const tw = parseFloat(document.getElementById('targetWeightInput').value);
-          if (!isNaN(cw)) try { localStorage.setItem('currentWeight', cw.toFixed(1)); } catch(e){}
-          if (!isNaN(tw)) try { localStorage.setItem('targetWeight', tw.toFixed(1)); } catch(e){}
-          toast('目标设置已保存');
+
+        // 预填充数据
+        (function(){
+            const cw = localStorage.getItem('currentWeight');
+            const tw = localStorage.getItem('targetWeight');
+            const savedHeight = localStorage.getItem('height');
+            
+            if (cw && validateWeight(parseFloat(cw))) {
+                document.getElementById('currentWeightInput').value = parseFloat(cw).toFixed(1);
+            }
+            if (tw && validateWeight(parseFloat(tw))) {
+                document.getElementById('targetWeightInput').value = parseFloat(tw).toFixed(1);
+            }
+            if (savedHeight && !isNaN(parseFloat(savedHeight))) {
+                height = parseFloat(savedHeight);
+                document.getElementById('heightDisplay').textContent = height + ' cm';
+            }
+            
+            // 初始化计算
+            updateCalculations();
+        })();
+
+        // 自动保存（失焦即保存）
+        document.getElementById('currentWeightInput').addEventListener('blur', function(){
+            const v = parseFloat(this.value);
+            if (validateWeight(v)) {
+                localStorage.setItem('currentWeight', v.toFixed(1));
+                showToast('当前体重已保存', 'success');
+            } else {
+                showToast('请输入有效的体重值', 'error');
+                this.focus();
+            }
         });
-      })();
+        
+        document.getElementById('targetWeightInput').addEventListener('blur', function(){
+            const v = parseFloat(this.value);
+            if (validateWeight(v)) {
+                localStorage.setItem('targetWeight', v.toFixed(1));
+                showToast('目标体重已保存', 'success');
+            } else {
+                showToast('请输入有效的目标体重', 'error');
+                this.focus();
+            }
+        });
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.position = 'fixed';
+            toast.style.left = '50%';
+            toast.style.bottom = '120px';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.padding = '12px 20px';
+            toast.style.borderRadius = '12px';
+            toast.style.fontSize = '14px';
+            toast.style.fontWeight = '500';
+            toast.style.zIndex = '1000';
+            toast.style.transition = 'all 0.3s ease';
+            
+            // 根据类型设置颜色
+            if (type === 'success') {
+                toast.style.background = 'rgba(195, 235, 46, 0.9)';
+                toast.style.color = '#1C1C1E';
+            } else if (type === 'error') {
+                toast.style.background = 'rgba(239, 68, 68, 0.9)';
+                toast.style.color = '#ffffff';
+            } else {
+                toast.style.background = 'rgba(17, 17, 17, 0.9)';
+                toast.style.color = '#ffffff';
+            }
+            
+            document.body.appendChild(toast);
+            
+            // 动画效果
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(-10px)';
+            }, 1500);
+            
+            setTimeout(() => toast.remove(), 1800);
+        }
+
+        // 保存按钮功能
+        (function(){
+            const btn = document.getElementById('save-goal');
+            if (!btn) return;
+            
+            btn.addEventListener('click', function(){
+                const cw = parseFloat(document.getElementById('currentWeightInput').value);
+                const tw = parseFloat(document.getElementById('targetWeightInput').value);
+                
+                // 数据验证
+                if (!validateWeight(cw)) {
+                    showToast('请输入有效的当前体重', 'error');
+                    document.getElementById('currentWeightInput').focus();
+                    return;
+                }
+                
+                if (!validateWeight(tw)) {
+                    showToast('请输入有效的目标体重', 'error');
+                    document.getElementById('targetWeightInput').focus();
+                    return;
+                }
+                
+                if (tw >= cw) {
+                    showToast('目标体重应小于当前体重', 'error');
+                    document.getElementById('targetWeightInput').focus();
+                    return;
+                }
+                
+                // 保存数据
+                try {
+                    localStorage.setItem('currentWeight', cw.toFixed(1));
+                    localStorage.setItem('targetWeight', tw.toFixed(1));
+                    localStorage.setItem('height', height.toString());
+                    
+                    // 保存时间戳
+                    localStorage.setItem('goalLastUpdated', new Date().toISOString());
+                    
+                    showToast('目标设置已保存！', 'success');
+                    
+                    // 延迟跳转，让用户看到保存成功的提示
+                    setTimeout(() => {
+                        if (window.history.length > 1) {
+                            window.history.back();
+                        } else {
+                            window.location.href = 'progress.html';
+                        }
+                    }, 1000);
+                    
+                } catch(e) {
+                    showToast('保存失败，请重试', 'error');
+                }
+            });
+        })();
     </script>
 <script src="common-nav.js"></script>
 </body>
