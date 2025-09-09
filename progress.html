@@ -596,6 +596,7 @@
                 </div>
             </div>
 
+
             <!-- 健康统计（始终展开） -->
             <div class="mb-8" id="health-stats">
                 <h2 class="text-lg font-bold text-gray-800 mb-4">健康统计</h2>
@@ -746,6 +747,25 @@
             }
         };
 
+        // 营养师点评数据
+        const nutritionistComments = {
+            week: {
+                period: "本周表现分析",
+                comment: "本周您的减重进展良好！体重下降趋势稳定，建议继续保持当前的饮食和运动节奏。注意周末的饮食控制，避免反弹。",
+                date: "本周"
+            },
+            month: {
+                period: "本月表现分析", 
+                comment: "您本月的减重表现非常出色！体重稳步下降，饮食结构也在逐步改善。建议继续保持当前的饮食和运动习惯，相信很快就能达到目标体重。",
+                date: "2024年1月"
+            },
+            quarter: {
+                period: "本季度表现分析",
+                comment: "本季度您的减重成果显著！从数据来看，您的健康习惯已经形成，体重管理进入良性循环。建议适当调整运动强度，为下一阶段做准备。",
+                date: "2024年Q1"
+            }
+        };
+
         // 统计数据（总和和日均）
         const statsData = {
             food: {
@@ -801,6 +821,8 @@
                         updateAllStatistics(period);
                         // 更新体重进度
                         updateWeightProgress(period);
+                        // 更新营养师点评
+                        updateNutritionistComment(period);
                     }
                 });
             });
@@ -952,6 +974,20 @@
             // 可选：趋势信息显示已移除，如需恢复可在此追加
         }
 
+        // 更新营养师点评
+        function updateNutritionistComment(period) {
+            const commentData = nutritionistComments[period];
+            if (commentData) {
+                const periodEl = document.getElementById('nutritionist-period');
+                const commentEl = document.getElementById('nutritionist-comment');
+                const dateEl = document.getElementById('nutritionist-date');
+                
+                if (periodEl) periodEl.textContent = commentData.period;
+                if (commentEl) commentEl.textContent = commentData.comment;
+                if (dateEl) dateEl.textContent = commentData.date;
+            }
+        }
+
         // 更新所有统计数据
         function updateAllStatistics(period) {
             console.log('更新统计数据:', period);
@@ -1011,6 +1047,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 初始化体重进度
             updateWeightProgress('month');
+            
+            // 初始化营养师点评
+            updateNutritionistComment('month');
             
             // 设置筛选器事件
             setupSegmentControl(document.getElementById('main-segment'));

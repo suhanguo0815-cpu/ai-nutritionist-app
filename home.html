@@ -504,37 +504,6 @@
              </div>
         </div>
 
-        <!-- 当日营养建议 -->
-        <div class="card p-4 mb-6">
-            <div class="flex items-center gap-3 mb-3">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background-color: rgba(195, 235, 46, 0.1);">
-                    <i class="fas fa-lightbulb" style="color: #C3EB2E; font-size: 14px;"></i>
-                </div>
-                <h3 class="text-base font-bold text-gray-800">今日营养建议</h3>
-            </div>
-            
-            <div class="bg-gradient-to-r from-green-50 to-white rounded-xl p-3 border-l-4" style="border-left-color: #C3EB2E;">
-                <div class="flex items-start gap-2">
-                    <div class="w-6 h-6 rounded-full flex items-center justify-center bg-white shadow-sm mt-0.5">
-                        <i class="fas fa-quote-left" style="color: #C3EB2E; font-size: 10px;"></i>
-                    </div>
-                    <div class="flex-1">
-                        <p id="daily-nutrition-advice" class="text-gray-700 text-sm leading-relaxed mb-2">
-                            您的蔬菜摄入表现优秀！建议继续保持，同时注意增加优质蛋白质的摄入，如鱼类、豆制品等，有助于维持肌肉量。
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-1">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-green-400 to-green-500 flex items-center justify-center">
-                                    <i class="fas fa-star text-white" style="font-size: 8px;"></i>
-                                </div>
-                                <span class="text-xs text-gray-600 font-medium">AI营养师</span>
-                            </div>
-                            <div class="text-xs text-gray-500" id="advice-time">今日</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- 打卡记录 -->
         <div class="mb-6">
@@ -690,67 +659,6 @@
     const vegGradeEl = $('veg-grade');
     if (vegGradeEl) vegGradeEl.textContent = grade;
 
-    // 根据T型餐盘数据生成个性化营养建议
-    function generateNutritionAdvice(veg, pro, carb) {
-      const adviceEl = document.getElementById('daily-nutrition-advice');
-      if (!adviceEl) return;
-
-      let advice = '';
-      
-      // 基于蔬菜摄入情况
-      if (veg >= 50) {
-        advice += '您的蔬菜摄入表现优秀！';
-        if (pro < 20) {
-          advice += '建议增加优质蛋白质的摄入，如鱼类、豆制品等，有助于维持肌肉量。';
-        } else if (carb < 20) {
-          advice += '建议适当增加主食摄入，如燕麦、糙米等，为身体提供充足能量。';
-        } else {
-          advice += '饮食结构很均衡，继续保持这样的健康习惯！';
-        }
-      } else if (veg >= 40) {
-        advice += '蔬菜摄入良好，';
-        if (pro < 20) {
-          advice += '建议增加蛋白质食物，同时多吃绿叶蔬菜，让营养更均衡。';
-        } else {
-          advice += '可以尝试增加更多种类的蔬菜，让营养更丰富。';
-        }
-      } else if (veg >= 30) {
-        advice += '蔬菜摄入需要提升，建议每餐都包含蔬菜，';
-        if (pro > 30) {
-          advice += '适当减少蛋白质，增加蔬菜比例。';
-        } else {
-          advice += '同时注意蛋白质和主食的均衡搭配。';
-        }
-      } else {
-        advice += '建议大幅增加蔬菜摄入，每餐至少占一半，';
-        if (pro > 30) {
-          advice += '减少高蛋白食物，多吃绿叶蔬菜和彩色蔬菜。';
-        } else if (carb > 30) {
-          advice += '减少主食摄入，用蔬菜替代部分主食。';
-        } else {
-          advice += '让蔬菜成为餐桌的主角。';
-        }
-      }
-
-      // 基于蛋白质摄入情况
-      if (pro < 15) {
-        advice += ' 另外，建议增加优质蛋白质，如鸡蛋、瘦肉、豆类等。';
-      } else if (pro > 35) {
-        advice += ' 注意蛋白质摄入过多，建议适当减少，增加蔬菜比例。';
-      }
-
-      // 基于碳水化合物摄入情况
-      if (carb < 15) {
-        advice += ' 主食摄入偏少，建议增加全谷物，如燕麦、糙米等。';
-      } else if (carb > 35) {
-        advice += ' 主食摄入较多，建议用蔬菜替代部分主食。';
-      }
-
-      adviceEl.textContent = advice;
-    }
-
-    // 生成营养建议
-    generateNutritionAdvice(veg, pro, carb);
   })();
 </script>
 <script src="common-nav.js"></script>
