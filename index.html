@@ -184,14 +184,14 @@
 
     <!-- 导航标签 -->
     <div class="nav-tabs">
-        <div class="nav-tab" data-target="main-flow" onclick="showSection('main-flow', this)">主要流程</div>
+        <div class="nav-tab active" data-target="main-flow" onclick="showSection('main-flow', this)">主要流程</div>
         <div class="nav-tab" data-target="records-flow" onclick="showSection('records-flow', this)">记录管理</div>
         <div class="nav-tab" data-target="goals-flow" onclick="showSection('goals-flow', this)">目标管理</div>
         <div class="nav-tab" data-target="profile-flow" onclick="showSection('profile-flow', this)">个人中心</div>
     </div>
 
     <!-- 主要流程 -->
-    <div id="main-flow" class="section-content">
+    <div id="main-flow" class="section-content active">
         <div class="category-section">
             <h2 class="category-title">主要用户流程</h2>
             <p class="category-description">展示用户从首页到各个功能模块的完整交互流程</p>
@@ -202,7 +202,7 @@
                     <h3 class="prototype-title">今日 - 健康概览</h3>
                     <div class="phone-frame">
                         <div class="screen">
-                            <iframe src="home.html" width="100%" height="100%" frameborder="0"></iframe>
+                            <iframe src="home.html?v=20251030" width="100%" height="100%" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="interaction-hint">点击打卡记录或健康统计进入详情</div>
@@ -248,7 +248,7 @@
                     <h3 class="prototype-title">今日 - 健康概览</h3>
                     <div class="phone-frame">
                         <div class="screen">
-                            <iframe src="home.html" width="100%" height="100%" frameborder="0"></iframe>
+                            <iframe src="home.html?v=20251030" width="100%" height="100%" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="flow-arrow">
@@ -450,22 +450,50 @@
             const last = localStorage.getItem('lastSectionId') || 'main-flow';
             showSection(last);
 
-            // 为每个iframe恢复并监听当前地址
+            // 为每个iframe恢复并监听当前地址（带版本参数的默认src不被旧缓存覆盖）
             const frames = document.querySelectorAll('.screen iframe');
             let saveTimer = null;
             frames.forEach((frame) => {
-                const defaultSrc = frame.getAttribute('src');
-                const key = `iframeState:${defaultSrc}`;
+                const defaultSrc = frame.getAttribute('src') || '';
+                const [defaultBase, defaultQuery = ''] = defaultSrc.split('?');
+                // 新键规则：按基础路径存储，避免版本参数变化导致读取不到
+                const key = `iframeState:${defaultBase}`;
+
+                // 兼容旧键：清理含查询参数的历史键，防止错误覆盖
+                try { localStorage.removeItem(`iframeState:${defaultSrc}`); } catch(e) {}
+
                 const saved = localStorage.getItem(key);
                 if (saved && saved !== defaultSrc) {
-                    frame.setAttribute('src', saved);
+                    const [savedBase] = saved.split('?');
+                    const hasVersion = /[?&]v=/.test(defaultQuery);
+                    const savedHasVersion = /[?&]v=/.test(saved);
+
+                    // 只在同一基础页面时才恢复；否则保持默认（例如 home 不被 records 覆盖）
+                    if (savedBase === defaultBase) {
+                        // 若默认包含版本但缓存不含版本，避免旧缓存把版本去掉
+                        if (hasVersion && !savedHasVersion) {
+                            frame.setAttribute('src', defaultSrc);
+                        } else {
+                            frame.setAttribute('src', saved);
+                        }
+                    } else {
+                        try { localStorage.removeItem(key); } catch(e) {}
+                        frame.setAttribute('src', defaultSrc);
+                    }
                 }
+
                 frame.addEventListener('load', () => {
                     try {
                         const currentHref = frame.contentWindow.location.href;
+                        const [currentBase] = currentHref.split('?');
                         // 简单节流，避免频繁写入
                         if (saveTimer) cancelAnimationFrame(saveTimer);
-                        saveTimer = requestAnimationFrame(() => localStorage.setItem(key, currentHref));
+                        saveTimer = requestAnimationFrame(() => {
+                            // 仅当仍在同一基础页面时保存，避免把其它页面持久化到此卡槽
+                            if (currentBase === defaultBase) {
+                                localStorage.setItem(key, currentHref);
+                            }
+                        });
                         // 请求该 iframe 页面上报可达链接
                         frame.contentWindow.postMessage({ type: '__REQUEST_FLOW__' }, '*');
                     } catch (e) { /* 忽略跨域 */ }
